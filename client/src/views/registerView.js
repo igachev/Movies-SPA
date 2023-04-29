@@ -41,6 +41,6 @@ async function submitHandler(e) {
     }
 
     await userService.register(email,password)
-    ctx.page.redirect('/')
+    ctx.page.redirect('/login')
 }
 }

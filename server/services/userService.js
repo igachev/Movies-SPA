@@ -16,13 +16,12 @@ exports.register = async (email,password) => {
 
 exports.login = async (email,password) => {
     const user = await User.findOne({email})
-
+    
     if(!user) {
         throw new Error('Invalid email or password')
     }
-
-    const checkPassword = await User.validatePassword(password)
-
+    const checkPassword = await user.validatePassword(password)
+    
     if(!checkPassword) {
         throw new Error('Invalid email or password')
     }
