@@ -28,7 +28,7 @@ exports.login = async (email,password) => {
 
     // I have to create authentication middleware to verify login
     const payload = {_id: user._id, email: user.email}
-    const token = jwt.sign(payload,SECRET,{ expiresIn: '1h' })
+    const token = await jwt.sign(payload,SECRET,{ expiresIn: '1h' })
     return {
         _id: user._id,
     email: user.email,

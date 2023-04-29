@@ -14,3 +14,11 @@ export async function login(email,password) {
     sessionStorage.setItem('userId', result._id);
     return result
 }
+
+export async function logout() {
+    const result = await get(`${baseUrl}/users/logout`)
+    sessionStorage.removeItem('email')
+    sessionStorage.removeItem('authToken')
+    sessionStorage.removeItem('userId')
+    return result;
+}
