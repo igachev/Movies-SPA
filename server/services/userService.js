@@ -11,3 +11,19 @@ exports.register = async (email,password) => {
     await user.save()
     
 }
+
+exports.login = async (email,password) => {
+    const user = await User.findOne({email})
+
+    if(!user) {
+        throw new Error('Invalid email or password')
+    }
+
+    const checkPassword = await User.validatePassword(password)
+
+    if(!checkPassword) {
+        throw new Error('Invalid email or password')
+    }
+
+    
+}
