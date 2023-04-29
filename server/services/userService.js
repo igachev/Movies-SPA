@@ -1,4 +1,6 @@
 const User = require('../models/User.js')
+const jwt = require('../jwtPromise/jsonwebtoken.js')
+const SECRET = process.env.JWT_SECRET
 
 exports.register = async (email,password) => {
     const existingUser = await User.findOne({email})
@@ -25,5 +27,8 @@ exports.login = async (email,password) => {
         throw new Error('Invalid email or password')
     }
 
-    
+    // I have to create authentication middleware to verify login
+    const payload = {_id: user._id, email: user.email}
+    const token = jwt.sign(payload,SECRET,{ expiresIn: '1h' })
+    return token
 }
