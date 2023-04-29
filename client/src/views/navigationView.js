@@ -23,6 +23,6 @@ const navigationTemplate = (user) => html `
         </nav>
 `
 
-export async function navigationView(ctx) {
+export function navigationView(ctx) {
     return navigationTemplate(ctx.user)
 }
