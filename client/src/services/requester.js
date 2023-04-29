@@ -1,60 +1,57 @@
 
 
-async function requester(url,options) {
-
+async function request(url, options) {
     try {
-        const res = await fetch(url,options)
+        const response = await fetch(url, options);
 
-    if(!res.ok) {
-        const error = await res.json()
-            throw new Error(error.message)
-    }
+        if (response.ok == false) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
 
-    try {
-        const data = await response.json();
-        return data;
+        try {
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            return response;
+        }
     } catch (err) {
-        return response;
-    }
-
-    } catch (err) {
-        alert(err.message)
-        throw err
+        alert(err.message);
+        throw err;
     }
 }
 
-async function setOptions(method='get',data) {
-    let options = {
+function getOptions(method = 'get', body) {
+    const options = {
         method,
-        headers:{}
-    }
+        headers: {}
+    };
 
-    const token = sessionStorage.getItem('authToken')
-
-    if(token != null) {
+    const token = sessionStorage.getItem('authToken');
+    if (token != null) {
         options.headers['X-Authorization'] = token;
     }
 
-    if(data) {
-        options.headers['Content-Type'] = 'application/json'
-        options.body = JSON.stringify(data)
+    if (body) {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(body);
     }
 
-    return options
+    return options;
 }
 
 export async function get(url) {
-    return await requester(url,setOptions())
+    return await request(url, getOptions());
 }
 
-export async function post(url,data) {
-    return await requester(url,setOptions('post',data))
+export async function post(url, data) {
+    return await request(url, getOptions('post', data));
 }
 
-export async function put(url,data) {
-    return await requester(url,setOptions('put',data))
+export async function put(url, data) {
+    return await request(url, getOptions('put', data));
 }
 
 export async function del(url) {
-    return await requester(url,setOptions('delete'))
+    return await request(url, getOptions('delete'));
 }

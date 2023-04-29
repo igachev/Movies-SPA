@@ -1,4 +1,5 @@
 import {html} from '../../node_modules/lit-html/lit-html.js'
+import * as userService from '../services/userService.js'
 
 const registerTemplate = (submitHandler) => html `
 <section>
@@ -23,6 +24,23 @@ ctx.render(registerTemplate(submitHandler))
 async function submitHandler(e) {
     e.preventDefault()
 
-    
+    const formData = new FormData(e.target)
+
+    const email = formData.get('email').trim()
+    const password = formData.get('password').trim()
+    const repeatPassword = formData.get('repeatPassword').trim()
+
+    if(password !== repeatPassword) {
+        alert('password missmatch!')
+        return
+    }
+
+    if(email === '' || password === '' || repeatPassword === '') {
+        alert('All fields are required!')
+        return
+    }
+
+    await userService.register(email,password)
+    ctx.page.redirect('/')
 }
 }
