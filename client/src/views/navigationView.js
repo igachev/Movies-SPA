@@ -12,7 +12,7 @@ const guestUserLinks = html `
 
 const navigationTemplate = (user) => html `
         <nav>
-            <ul>
+            <ul class="menu-list">
                 <li><a href="/">Home</a></li>
                 <li><a href="/movies">All Movies</a></li>
                 ${user
