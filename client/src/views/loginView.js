@@ -2,15 +2,24 @@ import {html} from '../../node_modules/lit-html/lit-html.js'
 import * as userService from '../services/userService.js'
 
 const loginTemplate = (submitHandler) => html `
-<section>
-    <form @submit=${submitHandler} method="post">
+<section class="login-section">
+    <form @submit=${submitHandler} method="post" class="login-form">
+
+        <div class="inner-container">
+
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email">
-
+        
+        <input type="email" name="email" id="email" class="login-input-field" size="30" placeholder="john@gmail.com...">
+           
         <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
+        
+        <input type="password" name="password" id="password" class="login-input-field" size="30" placeholder="******">
+           
+        <input type="submit" value="Sign In" class="btn">
+        <hr>
+        <p>Not Registered? <a href="/register">Click here</a></p>
+    </div>
 
-        <input type="submit" value="Login">
     </form>
 </section>
 `;
