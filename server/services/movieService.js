@@ -7,6 +7,6 @@ exports.create = async (userId,movieData) => {
         throw new Error('Movie already exists!')
     }
 
-const movie = await User.create({...movieData, owner: userId})
+const movie = await Movie.create({...movieData, owner: userId})
 return movie;
 }

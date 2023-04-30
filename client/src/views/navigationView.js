@@ -2,7 +2,7 @@ import {html} from '../../node_modules/lit-html/lit-html.js'
 
 const loggedUserLinks = html `
 <li><a href="/logout">Logout</a></li>
-<li><a href="/create">Create Movie</a></li>
+<li><a href="/movies/create">Create Movie</a></li>
 `;
 
 const guestUserLinks = html `
