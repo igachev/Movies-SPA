@@ -2,8 +2,10 @@ import {html} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
 
 const createTemplate = (submitHandler) => html `
-<section>
-    <form method="post" @submit=${submitHandler}>
+<section class="create-section">
+    <form class="create-form" method="post" @submit=${submitHandler}>
+
+    <div class="container">
 
         <div>
         <label for="title">Title:</label>
@@ -25,9 +27,9 @@ const createTemplate = (submitHandler) => html `
             <input type="text" name="genre" id="genre">
         </div>
 
-        <div>
+        <div class="description-field">
             <label for="description">Description:</label>
-            <input type="text" name="description" id="description">
+            <textarea name="description" id="description" rows="4" cols="40"></textarea>
         </div>
 
         <div>
@@ -36,8 +38,11 @@ const createTemplate = (submitHandler) => html `
         </div>
 
         <div>
-            <input type="submit" value="Create">
+            <input type="submit" value="Create" class="btn">
         </div>
+
+        </div>
+
     </form>
 </section>
 `;
