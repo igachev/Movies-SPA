@@ -2,12 +2,13 @@ import {html,nothing} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
 
 const detailsTemplate = (movie,isOwner) => html `
-    <div class="deteils-section">
-    <div class="details-card">
+    <div class="details-section">
 
-<div >
+    <div >
     <img src="${movie.imageUrl}" alt="${movie.title}">
-</div>
+    </div>
+
+    <div class="details-card">
 
 <div >
     <p>Title: ${movie.title}</p>
@@ -31,8 +32,8 @@ const detailsTemplate = (movie,isOwner) => html `
 
 ${  isOwner
     ? html ` <div>
-    <a href="">Edit</a>
-    <a href="">Delete</a>
+    <a href="/movies/${movie._id}/edit" class="btn">Edit</a>
+    <a href="/movies/${movie._id}/delete" class="btn">Delete</a>
     </div>` 
     : nothing}
 

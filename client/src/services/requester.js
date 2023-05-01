@@ -5,6 +5,13 @@ async function request(url, options) {
         const response = await fetch(url, options);
 
         if (response.ok == false) {
+
+            if(response.status === 403 || response.status === 401) {
+                sessionStorage.removeItem('authToken')
+                sessionStorage.removeItem('userId')
+                sessionStorage.removeItem('email')
+            }
+
             const error = await response.json();
             throw new Error(error.message);
         }
