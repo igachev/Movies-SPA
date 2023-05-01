@@ -11,3 +11,8 @@ export async function getAll() {
     const result = await get(`${baseUrl}/movies`)
     return result
 }
+
+export async function getOne(movieId) {
+    const result = await get(`${baseUrl}/movies/${movieId}`)
+    return result
+}
