@@ -10,3 +10,8 @@ exports.create = async (userId,movieData) => {
 const movie = await Movie.create({...movieData, owner: userId})
 return movie;
 }
+
+exports.getAll = async () => {
+    const movies = await Movie.find({})
+    return movies
+}

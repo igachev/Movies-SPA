@@ -15,6 +15,15 @@ router.post('/create', async (req,res) => {
     }
 })
 
+router.get('/', async (req,res) => {
+    try {
+        const movies = await movieService.getAll()
+        res.json(movies)
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
+
 
 
 module.exports = router
