@@ -7,6 +7,7 @@ import { createView } from './views/createView.js'
 import { homeView } from './views/homeView.js'
 import { loginView } from './views/loginView.js'
 import { logoutView } from './views/logoutView.js'
+import { moviesView } from './views/moviesView.js'
 import { registerView } from './views/registerView.js'
 
 page(authMiddleware)
@@ -17,6 +18,7 @@ page('/',homeView)
 page('/register',registerView)
 page('/login',loginView)
 page('/logout',logoutView)
+page('/movies',moviesView)
 page('/movies/create',createView)
 
 page.start()

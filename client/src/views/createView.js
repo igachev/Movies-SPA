@@ -78,6 +78,6 @@ export async function createView(ctx) {
         }
 
         await movieService.create(movieData)
-        ctx.page.redirect('/')
+        ctx.page.redirect('/movies')
     }
 }
