@@ -25,3 +25,13 @@ exports.getOne = async (movieId) => {
 
     return movie;
 }
+
+exports.delete = async (movieId) => {
+    const movie = await Movie.findByIdAndDelete(movieId)
+
+    if(!movie) {
+        throw new Error('Movie does not exists!')
+    }
+
+    return movie;
+}

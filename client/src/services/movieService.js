@@ -1,4 +1,4 @@
-import {get,post} from './requester.js'
+import {get,post,del} from './requester.js'
 
 const baseUrl = 'http://localhost:5000'
 
@@ -14,5 +14,10 @@ export async function getAll() {
 
 export async function getOne(movieId) {
     const result = await get(`${baseUrl}/movies/${movieId}`)
+    return result
+}
+
+export async function deleteOne(movieId) {
+    const result = await del(`${baseUrl}/movies/${movieId}`)
     return result
 }

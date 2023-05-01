@@ -4,6 +4,7 @@ import { authMiddleware } from './middlewares/authMiddleware.js'
 import { renderMiddleware } from './middlewares/renderMiddleware.js'
 import { renderNavigation } from './middlewares/renderNavMenuMiddleware.js'
 import { createView } from './views/createView.js'
+import { deleteView } from './views/deleteView.js'
 import { detailsView } from './views/detailsView.js'
 import { homeView } from './views/homeView.js'
 import { loginView } from './views/loginView.js'
@@ -22,5 +23,6 @@ page('/logout',logoutView)
 page('/movies',moviesView)
 page('/movies/create',createView)
 page('/movies/:movieId/details',detailsView)
+page('/movies/:movieId/delete',deleteView)
 
 page.start()

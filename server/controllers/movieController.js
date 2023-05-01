@@ -35,4 +35,15 @@ router.get('/:movieId', async (req,res) => {
     }
 })
 
+router.delete('/:movieId', async (req,res) => {
+    const movieId = req.params.movieId
+
+    try {
+        const movie = await movieService.delete(movieId)
+        res.json({_id: movie._id})
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
+
 module.exports = router
