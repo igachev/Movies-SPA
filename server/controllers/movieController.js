@@ -24,6 +24,15 @@ router.get('/', async (req,res) => {
     }
 })
 
+router.get('/:movieId', async (req,res) => {
+    const movieId = req.params.movieId
 
+    try {
+        const movie = await movieService.getOne(movieId)
+        res.json(movie)
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
 
 module.exports = router

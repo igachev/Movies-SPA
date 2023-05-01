@@ -15,3 +15,13 @@ exports.getAll = async () => {
     const movies = await Movie.find({})
     return movies
 }
+
+exports.getOne = async (movieId) => {
+    const movie = await Movie.findById(movieId)
+
+    if(!movie) {
+        throw new Error('Movie does not exists!')
+    }
+
+    return movie;
+}

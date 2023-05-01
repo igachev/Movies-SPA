@@ -186,7 +186,7 @@ margin-top: 8px;
 .movies-section {
     display: flex;
     background-color: rgb(124, 119, 119);
-    height: 600px;
+    min-height: 600px;
     color: #fff;
    
 }
@@ -223,4 +223,8 @@ margin: 7px;
     border: 1px solid black;
     padding: 6px;
     border-radius: 10px;
+}
+
+.movie-card .title p {
+    font-size: 20px;
 }
