@@ -192,7 +192,7 @@ text-decoration: none;
     background: linear-gradient(to right,hsl(20, 2%, 29%),hsl(7, 31%, 89%));
     min-height: 600px;
     color: #fff;
-   
+   flex-direction: column;
 }
 
 .movies-section .movie-container {
@@ -232,6 +232,33 @@ margin: 7px;
 
 .movie-card .title p {
     font-size: 20px;
+}
+
+.movies-section .pagination {
+    display: flex;
+    justify-content: center;
+   
+}
+
+.movies-section .pagination-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movies-section .pagination-list li {
+    list-style: none;
+    margin: 0px 8px;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.movies-section .pagination-list li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+
 }
 
 .details-section {

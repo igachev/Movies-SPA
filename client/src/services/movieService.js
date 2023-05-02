@@ -2,13 +2,18 @@ import {get,post,del,put} from './requester.js'
 
 const baseUrl = 'http://localhost:5000'
 
+const moviesPerPage = 5;
+
 export async function create(movieData) {
     const result = await post(`${baseUrl}/movies/create`,movieData)
     return result;
 }
 
-export async function getAll() {
-    const result = await get(`${baseUrl}/movies`)
+export async function getAll(currentPage) {
+    let result = await get(`${baseUrl}/movies`)
+    const trimStart = (currentPage - 1) * moviesPerPage
+    const trimEnd = trimStart + moviesPerPage
+    result = result.slice(trimStart,trimEnd)
     return result
 }
 
