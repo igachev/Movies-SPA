@@ -6,6 +6,7 @@ import { renderNavigation } from './middlewares/renderNavMenuMiddleware.js'
 import { createView } from './views/createView.js'
 import { deleteView } from './views/deleteView.js'
 import { detailsView } from './views/detailsView.js'
+import { editView } from './views/editView.js'
 import { homeView } from './views/homeView.js'
 import { loginView } from './views/loginView.js'
 import { logoutView } from './views/logoutView.js'
@@ -24,5 +25,6 @@ page('/movies',moviesView)
 page('/movies/create',createView)
 page('/movies/:movieId/details',detailsView)
 page('/movies/:movieId/delete',deleteView)
+page('/movies/:movieId/edit',editView)
 
 page.start()
