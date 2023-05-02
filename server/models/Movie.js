@@ -3,27 +3,27 @@ const mongoose = require('mongoose')
 const movieSchema = new mongoose.Schema({
     title: {
         type:String,
-        required: true
+        required: [true,'title is required']
     },
     year: {
         type:Number,
-        required: true
+        required: [true,'year is required']
     },
     runtime: {
         type: Number,
-        required: true
+        required: [true,'runtime is required']
     },
     genre: {
         type:String,
-        required: true
+        required: [true,'genre is required']
     },
     description: {
         type: String,
-        required:true
+        required:[true,'description is required']
     },
     imageUrl: {
         type:String,
-        required:true
+        required:[true,'imageUrl is required']
     },
     owner: {
         type: mongoose.Types.ObjectId,

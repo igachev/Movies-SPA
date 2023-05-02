@@ -46,4 +46,18 @@ router.delete('/:movieId', async (req,res) => {
     }
 })
 
+router.put('/:movieId', async (req,res) => {
+    const movieId = req.params.movieId
+    const {title,year,runtime,genre,description,imageUrl} = req.body
+
+    const data = {title,year,runtime,genre,description,imageUrl}
+
+    try {
+        const movie = await movieService.edit(movieId,data)
+        res.json(movie)
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
+
 module.exports = router
