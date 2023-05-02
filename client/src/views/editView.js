@@ -37,8 +37,9 @@ const editTemplate = (movie, submitHandler) => html`
             <input type="text" name="imageUrl" id="imageUrl" .value=${movie.imageUrl}>
         </div>
 
-        <div>
+        <div class="submit-field">
             <input type="submit" value="Edit" class="btn">
+            <a href="/movies/${movie._id}/details" class="btn">Back</a>
         </div>
 
         </div>
