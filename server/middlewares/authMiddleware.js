@@ -8,8 +8,16 @@ if(token) {
 
     try {
     const decodedToken = await jwt.verify(token,SECRET)
-    req.user = decodedToken
-    } catch (err) {
+
+    const { exp } = decodedToken
+
+    if (Date.now() >= exp * 1000) {
+      res.status(401).json({ ok: false })
+      return
+    }
+
+    req.user = decodedToken;
+    } catch (err) { 
         res.status(401).json({ok:false})
     }
 
@@ -17,4 +25,12 @@ if(token) {
 
 next()
 
+}
+
+exports.errorHandler = (err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err)
+  }
+  console.error(err.stack)
+  res.status(500).json({ ok: false })
 }

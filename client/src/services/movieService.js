@@ -31,3 +31,25 @@ export async function edit(movieId,data) {
     const result = await put(`${baseUrl}/movies/${movieId}`,data)
     return result
 }
+
+export async function addLike(movieId,userId) {
+    let movie = await getOne(movieId)
+
+    if(movie.likes.includes(userId)) {
+        alert('User already liked this movie')
+        return
+    }
+    
+    movie.likes.push(userId)
+    const result = await put(`${baseUrl}/movies/${movieId}`,movie)
+    return result
+}
+
+export async function isLiked(movieId,userId) {
+    let movie = await getOne(movieId)
+
+    if(movie.likes.includes(userId)) {
+        return true
+    }
+    return false;
+}

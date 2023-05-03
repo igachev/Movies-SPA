@@ -37,6 +37,6 @@ exports.delete = async (movieId) => {
 }
 
 exports.edit = async (movieId,data) => {
-    const movie = await Movie.findByIdAndUpdate(movieId,data,{runValidators:true})
+    const movie = await Movie.findByIdAndUpdate(movieId,data,{runValidators:true,new:true})
     return movie
 }

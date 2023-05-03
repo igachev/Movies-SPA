@@ -48,9 +48,9 @@ router.delete('/:movieId', async (req,res) => {
 
 router.put('/:movieId', async (req,res) => {
     const movieId = req.params.movieId
-    const {title,year,runtime,genre,description,imageUrl} = req.body
+    const {title,year,runtime,genre,description,imageUrl,likes} = req.body
 
-    const data = {title,year,runtime,genre,description,imageUrl}
+    const data = {title,year,runtime,genre,description,imageUrl,likes}
 
     try {
         const movie = await movieService.edit(movieId,data)
