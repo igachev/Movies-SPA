@@ -1,7 +1,5 @@
-import {html,nothing} from '../../node_modules/lit-html/lit-html.js'
+import {html,nothing,render} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
-
-
 
 function likeHandler(movieId) {
     return async function(e) {
@@ -10,10 +8,35 @@ function likeHandler(movieId) {
     const updatedMovie = await movieService.addLike(movieId,userId)
     const countLikes = document.getElementById('count-likes')
     countLikes.textContent = 'Likes: ' + updatedMovie.likes.length
+    // render the dislike button
+    const detailsCard = document.querySelector('.details-card')
+    const dislikeBtnTemplate = html`<button class="btn dislike-btn" @click=${dislikeHandler(movieId)}>Dislike</button>`
+    render(dislikeBtnTemplate, detailsCard)
+
     const likeBtn = document.querySelector('.like-btn')
     likeBtn.style.display = 'none'
+    
     return updatedMovie
     } 
+}
+
+function dislikeHandler(movieId) {
+    return async function(e) {
+    e.preventDefault()
+    const userId = sessionStorage.getItem('userId')
+    const updatedMovie = await movieService.removeLike(movieId,userId)
+    const countLikes = document.getElementById('count-likes')
+    countLikes.textContent = 'Likes: ' + updatedMovie.likes.length
+    // render the like button
+    const detailsCard = document.querySelector('.details-card')
+    const likeBtnTemplate = html`<button class="btn like-btn" @click=${likeHandler(movieId)}>Like</button>`
+    render(likeBtnTemplate, detailsCard)
+
+    const dislikeBtn = document.querySelector('.dislike-btn')
+    dislikeBtn.style.display = 'none'
+  
+    return updatedMovie
+    }
 }
 
 const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked) => html `
@@ -49,6 +72,7 @@ const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked) => html `
     <p id="count-likes">Likes: ${movie.likes.length}</p>
 </div>
 
+<!-- owner can see edit and delete -->
 ${  isOwner
     ? html ` <div>
     <a href="/movies/${movie._id}/edit" class="btn">Edit</a>
@@ -56,11 +80,19 @@ ${  isOwner
     </div>` 
     : nothing}
 
-${(isAuthenticated && !isOwner && !isLiked)
-    
+<!-- logged in user who is not owner can see like btn and 
+the movie is not yet liked by him -->
+${(isAuthenticated && !isOwner && !isLiked) 
     ? html `<button class="btn like-btn" @click=${likeHandler(movie._id)}>Like</button>`
-    : nothing}
+    : nothing
+    }
     
+<!-- logged in user who is not owner and already liked the movie
+can see dislike btn -->
+${(isAuthenticated && !isOwner && isLiked) 
+    ? html `<button class="btn dislike-btn" @click=${dislikeHandler(movie._id)}>Dislike</button>`
+    : nothing
+    }
 
 </div>
 </div>

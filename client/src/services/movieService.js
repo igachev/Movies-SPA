@@ -45,6 +45,18 @@ export async function addLike(movieId,userId) {
     return result
 }
 
+export async function removeLike(movieId,userId) {
+    let movie = await getOne(movieId)
+    const position = movie.likes.indexOf(userId)
+
+    if(position !== -1) {
+        movie.likes.splice(position,1)
+    } 
+
+    const result = await put(`${baseUrl}/movies/${movieId}`,movie)
+    return result
+}
+
 export async function isLiked(movieId,userId) {
     let movie = await getOne(movieId)
 
