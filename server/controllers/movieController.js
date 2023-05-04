@@ -1,8 +1,9 @@
 
 const router = require('express').Router()
 const movieService = require('../services/movieService.js')
+const authMiddleware = require('../middlewares/authMiddleware.js')
 
-router.post('/create', async (req,res) => {
+router.post('/create', authMiddleware.isAuthorized, async (req,res) => {
     const {title,year,runtime,genre,description,imageUrl} = req.body;
     const movieData = {title,year,runtime,genre,description,imageUrl}
     const userId = req.user._id
@@ -35,7 +36,7 @@ router.get('/:movieId', async (req,res) => {
     }
 })
 
-router.delete('/:movieId', async (req,res) => {
+router.delete('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
     const movieId = req.params.movieId
 
     try {
@@ -46,7 +47,7 @@ router.delete('/:movieId', async (req,res) => {
     }
 })
 
-router.put('/:movieId', async (req,res) => {
+router.put('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
     const movieId = req.params.movieId
     const {title,year,runtime,genre,description,imageUrl,likes} = req.body
 
