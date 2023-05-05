@@ -34,6 +34,12 @@ const movieSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref:'User'
         }
+    ],
+    comments: [
+        {
+            comment: {type: String},
+            createdAt: {type: Date, default: Date.now }
+        }
     ]
 })
 

@@ -4,8 +4,8 @@ const movieService = require('../services/movieService.js')
 const authMiddleware = require('../middlewares/authMiddleware.js')
 
 router.post('/create', authMiddleware.isAuthorized, async (req,res) => {
-    const {title,year,runtime,genre,description,imageUrl} = req.body;
-    const movieData = {title,year,runtime,genre,description,imageUrl}
+    const {title,year,runtime,genre,description,imageUrl,likes} = req.body;
+    const movieData = {title,year,runtime,genre,description,imageUrl,likes}
     const userId = req.user._id
 
     try {
@@ -60,5 +60,7 @@ router.put('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
         res.status(400).json({message: err.message})
     }
 })
+
+
 
 module.exports = router

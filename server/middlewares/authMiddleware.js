@@ -18,7 +18,7 @@ exports.authentication = async (req,res,next) => {
     req.user = decodedToken
     
   } catch (err) {
-     res.status(401).json({ ok: false, message: 'Invalid token' })
+    return res.status(401).json({ ok: false, message: 'Invalid token' })
   }
 }
 
