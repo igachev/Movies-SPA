@@ -50,7 +50,7 @@ function prevPage(currentPage) {
 
 export async function moviesView(ctx) {
     let params = new URLSearchParams(ctx.querystring)
-    console.log(params.get('page'));
+   // console.log(params.get('page'));
     let page = params.get("page") || 1;
     page = Number(page)
    // console.log(page);
