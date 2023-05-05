@@ -2,6 +2,7 @@ import {html,nothing,render} from '../../node_modules/lit-html/lit-html.js'
 import * as commentService from '../services/commentService.js'
 
 const addCommentTemplate = (submitHandler) => html `
+<section class="comment-section">
 <div class="comment-card">
     <form @submit=${submitHandler} class="comment-form" method="post">
         <label for="comment">Comment:</label>
@@ -9,6 +10,7 @@ const addCommentTemplate = (submitHandler) => html `
         <input type="submit" value="Post" class="btn">
     </form>
 </div>
+</section>
 `;
 
 export async function addCommentView(ctx) {

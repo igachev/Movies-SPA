@@ -96,7 +96,7 @@ ${(isAuthenticated && !isOwner && isLiked)
 
 <!-- Only logged in users can write comments -->
 ${isAuthenticated
-    ? html `<a href="/comments/${movie._id}/add">Add comment to this movie</a>`
+    ? html `<div class="comment-field"><a href="/comments/${movie._id}/add" class="btn" >Add comment</a></div>`
     : nothing
     }
 
