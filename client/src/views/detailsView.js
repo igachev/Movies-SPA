@@ -1,5 +1,13 @@
 import {html,nothing,render} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
+import * as commentService from '../services/commentService.js'
+
+const commentCard = (comment) => html `
+<div class="comment-card-template">
+<h4>${comment.username} : </h4>
+<p>${comment.comment}</p>        
+</div>
+`;
 
 function likeHandler(movieId) {
     return async function(e) {
@@ -9,9 +17,9 @@ function likeHandler(movieId) {
     const countLikes = document.getElementById('count-likes')
     countLikes.textContent = 'Likes: ' + updatedMovie.likes.length
     // render the dislike button
-    const detailsCard = document.querySelector('.details-card')
+    const ownerBtns = document.querySelector('.owner-btns')
     const dislikeBtnTemplate = html`<button class="btn dislike-btn" @click=${dislikeHandler(movieId)}>Dislike</button>`
-    render(dislikeBtnTemplate, detailsCard)
+    render(dislikeBtnTemplate, ownerBtns)
 
     const likeBtn = document.querySelector('.like-btn')
     likeBtn.style.display = 'none'
@@ -28,9 +36,9 @@ function dislikeHandler(movieId) {
     const countLikes = document.getElementById('count-likes')
     countLikes.textContent = 'Likes: ' + updatedMovie.likes.length
     // render the like button
-    const detailsCard = document.querySelector('.details-card')
+    const ownerBtns = document.querySelector('.owner-btns')
     const likeBtnTemplate = html`<button class="btn like-btn" @click=${likeHandler(movieId)}>Like</button>`
-    render(likeBtnTemplate, detailsCard)
+    render(likeBtnTemplate, ownerBtns)
 
     const dislikeBtn = document.querySelector('.dislike-btn')
     dislikeBtn.style.display = 'none'
@@ -39,7 +47,7 @@ function dislikeHandler(movieId) {
     }
 }
 
-const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked) => html `
+const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked,comments) => html `
     <div class="details-section">
 
     <div >
@@ -48,7 +56,7 @@ const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked) => html `
 
     <div class="details-card">
 
-<div >
+<div class="title-field">
     <p>Title: ${movie.title}</p>
 </div>
 
@@ -64,7 +72,7 @@ const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked) => html `
     <p>Genre: ${movie.genre}</p>
 </div>
 
-<div >
+<div class="description-field" >
     <p>Description: ${movie.description}</p>
 </div>
 
@@ -73,13 +81,14 @@ const detailsTemplate = (movie,isOwner,isAuthenticated,isLiked) => html `
 </div>
 
 <!-- owner can see edit and delete -->
+<div class="owner-btns">
 ${  isOwner
-    ? html ` <div>
+    ? html ` 
     <a href="/movies/${movie._id}/edit" class="btn">Edit</a>
     <a href="/movies/${movie._id}/delete" class="btn">Delete</a>
-    </div>` 
+    ` 
     : nothing}
-
+</div>
 <!-- logged in user who is not owner can see like btn and 
 the movie is not yet liked by him -->
 ${(isAuthenticated && !isOwner && !isLiked) 
@@ -100,6 +109,13 @@ ${isAuthenticated
     : nothing
     }
 
+<div class="comment-container">
+    <h3>Comments: </h3>
+    ${comments.length !== 0
+     ? comments.map((c) => commentCard(c))
+     : html `<h5>No comments yet...</h5>`}
+</div>
+
 </div>
 
 
@@ -116,7 +132,8 @@ export async function detailsView(ctx) {
     const isOwner = movie.owner == currentUser
     const isAuthenticated = sessionStorage.getItem('authToken') ? true : false
     const isLiked = await movieService.isLiked(movieId,currentUser)
-    ctx.render(detailsTemplate(movie,isOwner,isAuthenticated,isLiked))
+    const comments = await commentService.getMovieComments(movieId)
+    ctx.render(detailsTemplate(movie,isOwner,isAuthenticated,isLiked,comments))
     
 }
 

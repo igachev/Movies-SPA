@@ -263,8 +263,9 @@ margin: 7px;
     background: linear-gradient(to right,hsl(20, 2%, 29%),hsl(7, 31%, 89%));
     height: 600px;
     color: #fff;
-    
-   
+    min-height: 600px;
+   flex-wrap: wrap;
+   overflow-y: scroll;
 }
 
 .details-section img {
@@ -278,10 +279,20 @@ margin: 7px;
 .details-section .details-card {
     margin-left: 12px;
     font-size: 20px;
+    
 }
 
 .details-section .details-card .comment-field {
    margin-top: 30px;
+}
+
+.details-section .details-card .description-field {
+    width: 600px;
+}
+
+.details-section .details-card .title-field {
+    width: 600px;
+    
 }
 
 .edit-section {
@@ -366,4 +377,31 @@ margin: 7px;
 .comment-form textarea {
     resize: none;
     font-size: 18px;
+}
+
+
+.comment-card-template {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 6px 0px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.comment-card-template h4 {
+    font-size: 22px;
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 3px;
+    padding-bottom: 3px;
+}
+
+.comment-card-template p {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 300;
 }
