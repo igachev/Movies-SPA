@@ -2,10 +2,29 @@ import {html,nothing,render} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
 import * as commentService from '../services/commentService.js'
 
-const commentCard = (comment) => html `
+function deleteHandler(movieId,userComment,userUsername) {
+    return async function(e) {
+        e.preventDefault()
+        const commentData = {comment:userComment, username:userUsername}
+        const deleteComment = await commentService.deleteComment(movieId,commentData)
+        const commentContainer = e.target.parentElement.parentElement
+        //console.log(commentContainer);
+        commentContainer.remove()
+        return deleteComment
+    }
+}
+
+const commentCard = (comment,ownerOfComment,movieId,userComment,userUsername) => html `
 <div class="comment-card-template">
-<h4>${comment.username} : </h4>
-<p>${comment.comment}</p>        
+<h4 class="username-field">${comment.username} : </h4>
+${ownerOfComment
+? html `<div class="delete-icon">
+    <button @click=${deleteHandler(movieId,userComment,userUsername)}>X</button>
+</div>`
+:nothing}
+ 
+<p class="comment-text">${comment.comment}</p> 
+      
 </div>
 `;
 
@@ -112,7 +131,7 @@ ${isAuthenticated
 <div class="comment-container">
     <h3>Comments: </h3>
     ${comments.length !== 0
-     ? comments.map((c) => commentCard(c))
+     ? comments.map((c) => commentCard(c,c.username == sessionStorage.getItem('email')?.split('@')[0],movie._id,c.comment,c.username))
      : html `<h5>No comments yet...</h5>`}
 </div>
 

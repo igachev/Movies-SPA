@@ -62,3 +62,7 @@ export async function put(url, data) {
 export async function del(url) {
     return await request(url, getOptions('delete'));
 }
+
+export async function delComment(url,data) {
+    return await request(url, getOptions('delete', data))
+}

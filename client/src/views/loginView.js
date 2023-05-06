@@ -42,6 +42,6 @@ export async function loginView(ctx) {
         }
     
         await userService.login(email,password)
-        ctx.page.redirect('/')
+        ctx.page.redirect('/movies')
     }
 }
