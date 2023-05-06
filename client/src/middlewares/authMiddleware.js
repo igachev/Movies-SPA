@@ -1,5 +1,6 @@
 
 export const authMiddleware = (ctx,next) => {
-    ctx.user = sessionStorage.getItem('authToken')
-    next()
+    const authToken = sessionStorage.getItem('authToken');
+        ctx.user = authToken;
+        next();
 }

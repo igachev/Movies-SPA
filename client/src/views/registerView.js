@@ -31,12 +31,20 @@ async function submitHandler(e) {
     const repeatPassword = formData.get('repeatPassword').trim()
 
     if(password !== repeatPassword) {
-        alert('password missmatch!')
+        const msg = document.querySelector('.err-message')
+        msg.textContent = 'Password missmatch!'
+        setTimeout(() => {
+          msg.textContent = ''
+        }, 3000);
         return
     }
 
     if(email === '' || password === '' || repeatPassword === '') {
-        alert('All fields are required!')
+        const msg = document.querySelector('.err-message')
+       msg.textContent = 'All fields are required!'
+       setTimeout(() => {
+         msg.textContent = ''
+       }, 3000);
         return
     }
 

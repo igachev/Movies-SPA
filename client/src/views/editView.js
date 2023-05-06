@@ -66,7 +66,11 @@ export async function editView(ctx) {
 
         if(title === '' || year === '' || runtime === '' ||
         genre === '' || description === '' || imageUrl === '') {
-            alert('All fields are required!')
+            const msg = document.querySelector('.err-message')
+       msg.textContent = 'All fields are required!'
+       setTimeout(() => {
+         msg.textContent = ''
+       }, 3000);
             return;
         }
 

@@ -37,11 +37,23 @@ export async function loginView(ctx) {
        
         
         if(email === '' || password === '') {
-            alert('All fields are required!')
+            //alert('All fields are required!')
+            const msg = document.querySelector('.err-message')
+       msg.textContent = 'All fields are required!'
+       setTimeout(() => {
+         msg.textContent = ''
+       }, 3000);
+       
             return
         }
     
         await userService.login(email,password)
-        ctx.page.redirect('/movies')
+        const token = sessionStorage.getItem('authToken')
+
+        if(!token) {
+           return
+        }
+
+            ctx.page.redirect('/movies')
     }
 }

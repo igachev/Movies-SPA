@@ -8,11 +8,16 @@ return result
 }
 
 export async function login(email,password) {
+   
     const result = await post(`${baseUrl}/users/login`, {email,password})
+    
+    if(!result.hasOwnProperty('message')) {
     sessionStorage.setItem('email', result.email);
     sessionStorage.setItem('authToken', result.accessToken);
     sessionStorage.setItem('userId', result._id);
+    }
     return result
+    
 }
 
 export async function logout() {

@@ -21,6 +21,8 @@ const navigationTemplate = (user) => html `
                   }
             </ul>
         </nav>
+
+        
 `
 
 export function navigationView(ctx) {

@@ -10,7 +10,7 @@ async function request(url, options) {
                 sessionStorage.removeItem('authToken')
                 sessionStorage.removeItem('userId')
                 sessionStorage.removeItem('email')
-            }
+            } 
 
             const error = await response.json();
             throw new Error(error.message);
@@ -23,7 +23,12 @@ async function request(url, options) {
             return response;
         }
     } catch (err) {
-        alert(err.message);
+       const msg = document.querySelector('.err-message')
+       msg.textContent = err.message
+       setTimeout(() => {
+         msg.textContent = ''
+       }, 3000);
+      //  alert(err.message);
         throw err;
     }
 }

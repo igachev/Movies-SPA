@@ -15,6 +15,8 @@ app.use(authMiddleware.authentication)
 
 app.use(routes)
 
+
+
 setupDatabase()
 .then(() =>
 app.listen(process.env.PORT || 5000,() => {

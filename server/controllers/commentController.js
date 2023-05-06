@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const commentService = require('../services/commentService.js')
+const authMiddleware = require('../middlewares/authMiddleware.js')
 
-router.post('/:movieId', async (req,res) => {
+router.post('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
     const { comment,username } = req.body;
     const movieId = req.params.movieId
 
@@ -24,7 +25,7 @@ router.get('/:movieId', async (req,res) => {
     }
 })
 
-router.delete('/:movieId', async (req,res) => {
+router.delete('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
     const movieId = req.params.movieId;
     const {comment,username} = req.body
 
