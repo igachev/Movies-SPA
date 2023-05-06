@@ -24,4 +24,16 @@ router.get('/:movieId', async (req,res) => {
     }
 })
 
+router.delete('/:movieId', async (req,res) => {
+    const movieId = req.params.movieId;
+    const {comment,username} = req.body
+
+    try {
+        const deletedComment = await commentService.deleteComment(movieId,comment,username)
+        res.json({_id: deletedComment._id})
+    } catch (err) {
+        res.json({message: err.message})
+    }
+})
+
 module.exports = router
