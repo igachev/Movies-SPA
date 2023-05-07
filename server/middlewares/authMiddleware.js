@@ -1,4 +1,5 @@
 const jwt = require('../jwtPromise/jsonwebtoken.js')
+require('dotenv').config()
 const SECRET = process.env.JWT_SECRET
 
 exports.authentication = async (req, res, next) => {
