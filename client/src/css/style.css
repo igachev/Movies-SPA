@@ -45,6 +45,19 @@ nav {
     font-size: 17px;
     padding: 5px;
     margin: 15px 0px;
+    
+    transition: all 0.1s ease-out;
+}
+
+.menu-list li a:hover {
+    border-bottom: 1px solid #fff;
+    color: black;
+}
+
+.welcome-msg {
+    margin-left: 30px;
+    font-size: 18px;
+    color: #fff;
 }
 
 .home-section {
@@ -133,6 +146,12 @@ color: #fff;
 background: hsl(0, 3%, 15%);
 margin-top: 8px;
 text-decoration: none;
+transition: all 0.3s linear;
+}
+
+.btn:hover {
+background: #fff;
+color: hsl(0, 3%, 15%);
 }
 
 .create-section {
@@ -255,8 +274,13 @@ margin: 7px;
     text-decoration: none;
     color: #fff;
     font-size: 18px;
-
+    transition: all 0.2s linear;
 }
+
+.movies-section .pagination-list li a:hover {
+    color: black;
+}
+
 
 .details-section {
     display: flex;

@@ -13,7 +13,7 @@ const movieCard = (movie) => html `
 </div>
 
 <div>
-    <a href="/movies/${movie._id}/details">Details</a>
+    <a href="/movies/${movie._id}/details" class="btn">Details</a>
 </div>
 
 </div>
@@ -29,8 +29,8 @@ const moviesTemplate = (movies,page) => html `
     <div class="pagination">
     <nav>
     <ul class="pagination-list">
-    <li><a href="/movies?page=${prevPage(page)}">Previous Page</a></li>
-    <li><a href="/movies?page=${nextPage(page)}">Next Page</a></li>
+    <li><a href="/movies?page=${prevPage(page)}" >Previous Page</a></li>
+    <li><a href="/movies?page=${nextPage(page)}" >Next Page</a></li>
     </ul>
     </nav> 
     </div>

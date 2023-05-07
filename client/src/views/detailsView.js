@@ -19,7 +19,7 @@ const commentCard = (comment,ownerOfComment,movieId,userComment,userUsername) =>
 <h4 class="username-field">${comment.username} : </h4>
 ${ownerOfComment
 ? html `<div class="delete-icon">
-    <button @click=${deleteHandler(movieId,userComment,userUsername)}>X</button>
+    <button @click=${deleteHandler(movieId,userComment,userUsername)} class="btn">X</button>
 </div>`
 :nothing}
  

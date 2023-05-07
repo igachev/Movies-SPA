@@ -6,8 +6,8 @@ const homeTemplate = () => html `
 <div class="options">
 <p>Browse through our movie / tv show collection and find out your next movie to watch</p>
 <p>Like and comment on the movies you enjoy</p>
-<p>Add Movies</p>
-<p>Create your own watchlist</p>
+<p>Add Movies to our collection</p>
+
 </div>
 </section>
 `

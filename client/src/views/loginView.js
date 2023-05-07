@@ -54,6 +54,10 @@ export async function loginView(ctx) {
            return
         }
 
+        const username = sessionStorage.getItem('email')?.split('@')[0]
+        const welcomeMsg = document.querySelector('.welcome-msg')
+        welcomeMsg.textContent = `Welcome, ${username}!`
+
             ctx.page.redirect('/movies')
     }
 }
