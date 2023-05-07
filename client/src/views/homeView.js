@@ -14,6 +14,4 @@ const homeTemplate = () => html `
 
 export async function homeView(ctx) {
 ctx.render(homeTemplate())
-
-
 }
