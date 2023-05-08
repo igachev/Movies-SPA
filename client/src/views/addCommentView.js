@@ -24,7 +24,7 @@ export async function addCommentView(ctx) {
         const comment = formData.get('comment').trim()
         const movieId = ctx.params.movieId
         const email = sessionStorage.getItem('email')
-        const username = email.split('@')[0]
+        const username = email?.split('@')[0]
         
 
         const data = {comment,movieId,username}
