@@ -5,7 +5,7 @@ const registerTemplate = (submitHandler) => html `
 <section>
     <form @submit=${submitHandler} method="post">
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email" autocomplete="off">
 
         <label for="password">Password:</label>
         <input type="password" name="password" id="password">
@@ -14,6 +14,9 @@ const registerTemplate = (submitHandler) => html `
         <input type="password" name="repeatPassword" id="repeatPassword">
 
         <input type="submit" value="Register">
+
+        <hr>
+        <p>Already Registered? <a href="/login">Click here</a></p>
     </form>
 </section>
 `

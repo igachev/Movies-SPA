@@ -9,11 +9,11 @@ const loginTemplate = (submitHandler) => html `
 
         <label for="email">Email:</label>
         
-        <input type="email" name="email" id="email" class="login-input-field" size="30" placeholder="john@gmail.com...">
+        <input type="email" name="email" id="email" class="login-input-field" size="30" placeholder="john@gmail.com..." autocomplete="off">
            
         <label for="password">Password:</label>
         
-        <input type="password" name="password" id="password" class="login-input-field" size="30" placeholder="******">
+        <input type="password" name="password" id="password" class="login-input-field" size="30" placeholder="******" autocomplete="off">
            
         <input type="submit" value="Sign In" class="btn">
         <hr>
