@@ -10,7 +10,8 @@ router.post('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
         const addedComment = await commentService.add(movieId,comment,username)
         res.json({_id:addedComment._id})
     } catch (err) {
-        res.json({message:err.message})
+        console.log(err);
+        res.status(400).json({message:err.message})
     }
 })
 
@@ -21,7 +22,7 @@ router.get('/:movieId', async (req,res) => {
         const movieComments = await commentService.findComments(movieId)
         res.json(movieComments)
     } catch (err) {
-        res.json({message:err.message})
+        res.status(400).json({message:err.message})
     }
 })
 
@@ -33,7 +34,7 @@ router.delete('/:movieId', authMiddleware.isAuthorized, async (req,res) => {
         const deletedComment = await commentService.deleteComment(movieId,comment,username)
         res.json({_id: deletedComment._id})
     } catch (err) {
-        res.json({message: err.message})
+        res.status(400).json({message: err.message})
     }
 })
 
