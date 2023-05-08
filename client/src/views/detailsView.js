@@ -1,6 +1,8 @@
 import {html,nothing,render} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
 import * as commentService from '../services/commentService.js'
+import { readHandler } from '../services/readHandler.js'
+
 
 function deleteHandler(movieId,userComment,userUsername) {
     return async function(e) {
@@ -121,6 +123,10 @@ ${(isAuthenticated && !isOwner && isLiked)
     ? html `<button class="btn dislike-btn" @click=${dislikeHandler(movie._id)}>Dislike</button>`
     : nothing
     }
+
+    <div>
+ <button @click=${readHandler(movie.title,movie.year,movie.runtime,movie.genre,movie.description,movie.likes.length)} class="btn">Read</button>       
+</div>
 
 <!-- Only logged in users can write comments -->
 ${isAuthenticated
