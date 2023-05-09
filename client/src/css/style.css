@@ -64,6 +64,7 @@ nav {
     background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.6)) , url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
     color: #fff;
     height: 600px;
     margin: 0;
@@ -207,7 +208,7 @@ color: hsl(0, 3%, 15%);
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
-    
+    background-size: cover;
     height: 600px;
     color: #fff;
     align-items: center;
@@ -538,4 +539,110 @@ margin: 7px;
     text-align: center;
     background-color: rebeccapurple;
     color: #fff;
+}
+
+@media(max-width:500px) {
+
+    .menu-list li a {
+        font-size: 14px;
+    }
+
+    .menu-list {
+        margin-left: 2px;
+    }
+
+    .welcome-msg {
+        font-size: 14px;
+    }
+
+    .home-section h1 {
+        font-size: 18px;
+    }
+
+    .home-section p {
+        font-size: 14px;
+    }
+
+    .footer-section label {
+        font-size: 14px;
+    }
+
+    .footer-section #userEmail {
+        font-size: 14px;
+    }
+
+    .footer-section .footer-form p {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .login-form .login-input-field {
+        font-size: 14px;
+    }
+
+    .login-form label {
+        font-size: 14px;
+    }
+
+    .register-form input[type="password"],.register-form input[type="email"] {
+        font-size: 14px;
+    }
+
+    .register-form label {
+        font-size: 14px;
+    }
+
+    .create-form .container div input {
+        font-size: 14px;
+    }
+
+    .create-form .container div label {
+        font-size: 14px;
+    }
+
+    .movies-section .pagination-list li a {
+        font-size: 14px;
+    }
+
+    .movie-card .title p {
+        font-size: 14px;
+    }
+
+    .details-section .details-card {
+        font-size: 14px;
+    }
+
+    .comment-form label {
+        font-size: 15px;
+    }
+    
+    .comment-form textarea {
+        resize: none;
+        font-size: 14px;
+    }
+    
+    
+    .comment-card-template h4 {
+        font-size: 17px;
+    }
+    
+    .comment-card-template p {
+        font-size: 14px;
+    }
+    
+    .err-message {
+      font-size: 14px;
+    }
+
+    .edit-form .container div input {
+        font-size: 14px;
+    }
+    
+    .edit-form .container div label {
+        font-size: 15px;
+    }
+    
 }
