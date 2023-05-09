@@ -17,6 +17,13 @@ export async function getAll(currentPage) {
     return result
 }
 
+export async function getTotalPages() {
+    let result = await get(`${baseUrl}/movies`)
+    let totalMovies = result.length
+    const totalPages = Math.ceil(totalMovies / moviesPerPage);
+    return totalPages
+}
+
 export async function getOne(movieId) {
     const result = await get(`${baseUrl}/movies/${movieId}`)
     return result

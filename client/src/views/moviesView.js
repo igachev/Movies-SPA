@@ -1,6 +1,8 @@
 import {html} from '../../node_modules/lit-html/lit-html.js'
 import * as movieService from '../services/movieService.js'
 
+
+
 const movieCard = (movie) => html `
     <div class="movie-card">
 
@@ -19,7 +21,7 @@ const movieCard = (movie) => html `
 </div>
 `;
 
-const moviesTemplate = (movies,page) => html `
+const moviesTemplate = async (movies,page) => html `
 <section class="movies-section">
     
     <div class="movie-container">
@@ -30,7 +32,7 @@ const moviesTemplate = (movies,page) => html `
     <nav>
     <ul class="pagination-list">
     <li><a href="/movies?page=${prevPage(page)}" >Previous Page</a></li>
-    <li><a href="/movies?page=${nextPage(page)}" >Next Page</a></li>
+    <li><a class="next" href="/movies?page=${await nextPage(page)}" >Next Page</a></li>
     </ul>
     </nav> 
     </div>
@@ -38,9 +40,16 @@ const moviesTemplate = (movies,page) => html `
 </section>
 `;
 
-function nextPage(currentPage) {
-    let page = currentPage + 1
-    return page;
+ async function nextPage(currentPage) {
+   
+    let nextPage = currentPage + 1
+    let totalPages = await movieService.getTotalPages()
+    //console.log(totalPages);
+    if(nextPage > totalPages) {
+        return currentPage
+    }
+    return nextPage;
+
 }
 
 function prevPage(currentPage) {
@@ -56,5 +65,5 @@ export async function moviesView(ctx) {
    // console.log(page);
     const movies = await movieService.getAll(page)
    // console.log(movies);
-    ctx.render(moviesTemplate(movies,page))
+    ctx.render(await moviesTemplate(movies,page))
 }
