@@ -1,6 +1,6 @@
 import {get,post,del,put} from './requester.js'
 
-const baseUrl = 'http://localhost:5000'
+const baseUrl = 'https://test-movies-api.onrender.com'
 
 const moviesPerPage = 5;
 
