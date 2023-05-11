@@ -43,6 +43,8 @@ EMAIL =
 
 PASS =
 
+DATABASE used is mongoDB
+
 EMAIL must be your email.
 PASS is your email password.
 
