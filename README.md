@@ -64,3 +64,42 @@ The server listens on port 5000 by default. You can send HTTP requests to the se
 - `GET /comments/:movieId` : return all comments for a specific movie by ID
 - `DELETE /comments/:movieId` : delete a comment for movie by ID
 - `POST /subscribe` : send an email to the subscribed user
+
+
+### Frontend documentation for Single Page Application Movies-SPA
+This application is built with JavaScript,HTML,CSS.Using this application you can:
+ - Browse through  movie / tv show collection and find out your next movie to watch
+ - Like and Dislike movie
+ - Add comments to movies
+ - Add,Edit,Delete Movies
+ - To Subscribe 
+
+### Requirements:
+- lit-html
+- page
+- lite-server
+
+### Installation:
+1. Clone this repository: `git clone https://github.com/igachev/Movies-SPA.git`
+2. Install dependencies: `npm install`
+3. Go to folder client: `cd client`
+4. Start the development server: `npm start`
+
+### Folder structure:
+- `views` : Contains HTML templates for different views of the application.
+- `services` : Contains functions for making API requests to the server.
+- `middlewares` : Contains middleware functions used by the application.
+- `app.js` : Entry point of the application, which sets up routes using Page.js and imports middleware and view modules.
+
+### Routes:
+The application uses Page.js for client-side routing. Here are the available routes:
+- `/` : Homepage view
+- `/register` : User registration view
+- `/login` : User login view
+- `/logout` : User logout view
+- `/movies` : Movies listing view
+- `/movies/create` : Movie creation view
+- `/movies/:movieId/details` : Movie details view
+- `/movies/:movieId/delete` : Movie deletion view
+- `/movies/:movieId/edit` : Movie editing view
+- `/comments/:movieId/add` : Comment addition view
