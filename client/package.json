@@ -12,8 +12,5 @@
   "dependencies": {
     "lit-html": "^2.7.3",
     "page": "^1.11.6"
-  },
-  "devDependencies": {
-    "lite-server": "^2.6.1"
   }
 }
