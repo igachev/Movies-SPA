@@ -9,6 +9,7 @@ describe('movieService.js',function() {
     let baseUrl;
     let moviesData;
     let getAllSpy;
+    let getPagesSpy;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -103,6 +104,7 @@ describe('movieService.js',function() {
         ]
 
         getAllSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
+        getPagesSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -111,7 +113,13 @@ describe('movieService.js',function() {
     const trimEnd = trimStart + moviesPerPage
     result = result.slice(trimStart,trimEnd)
     return result
-    
+            },
+
+            getTotalPages: async function() {
+    let result = await getPagesSpy(`${baseUrl}/movies`)
+    let totalMovies = result.length
+    const totalPages = Math.ceil(totalMovies / moviesPerPage);
+    return totalPages
             }
         }
     })
@@ -132,7 +140,14 @@ describe('movieService.js',function() {
         expect(getAllSpy).toHaveBeenCalledTimes(1)
         expect(result.length).toBeGreaterThanOrEqual(0)
         expect(result.length).toBeLessThanOrEqual(5)
-})
+    })
+
+    it('should call getTotalPages method and calculate total pages', async function() {
+        let totalPages = await movieServices.getTotalPages()
+        expect(getPagesSpy).toHaveBeenCalledWith(`${baseUrl}/movies`);
+        expect(getPagesSpy).toHaveBeenCalledTimes(1)
+        expect(totalPages).toBe(2)
+    })
 })
 
 })
