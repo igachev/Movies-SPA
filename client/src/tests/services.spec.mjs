@@ -12,6 +12,8 @@ describe('movieService.js',function() {
     let getPagesSpy;
     let getOneSpy;
     let deleteOneSpy;
+    let editOneSpy;
+    let editedMovie;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -103,12 +105,29 @@ describe('movieService.js',function() {
                     '644ededb72e425c49c6b14af'
                 ]
             },
-        ]
+        ];
+
+         editedMovie = {
+            _id: '644ee3e9cab7747841f70eee',
+            title: 'Avatar',
+            year: 2009,
+            runtime: 162,
+            genre: 'fantasy,action',
+            description: 'testing',
+            imageUrl: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1294&q=80",
+            owner: '644ededb72e425c49c6b14af',
+            __v: 0,
+            likes: [
+                '6453e59987886e2de0a509f5',
+                '64515a43e5f1e924a0112924'
+            ]
+        };
 
         getAllSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getPagesSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getOneSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]))
         deleteOneSpy = spyOn(requester,'del').and.returnValue(Promise.resolve(moviesData[0]))
+        editOneSpy = spyOn(requester,'put').and.returnValue(Promise.resolve(editedMovie))
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -133,6 +152,11 @@ describe('movieService.js',function() {
 
             deleteOne: async function(movieId) {
     const result = await deleteOneSpy(`${baseUrl}/movies/${movieId}`)
+    return result
+            },
+
+            edit: async function(movieId,data) {
+    const result = await editOneSpy(`${baseUrl}/movies/${movieId}`,data)
     return result
             }
         }
@@ -177,6 +201,15 @@ describe('movieService.js',function() {
         let movie = await movieServices.deleteOne(movieId)
         expect(deleteOneSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`)
         expect(deleteOneSpy).toHaveBeenCalledTimes(1)
+    })
+
+    it('should call edit method and edit movie details correctly',async function() {
+        const movieId = moviesData[0]._id;
+        let movie = await movieServices.edit(movieId,editedMovie)
+        expect(editOneSpy).toHaveBeenCalledTimes(1)
+        expect(editOneSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`,editedMovie)
+        expect(movie).toEqual(editedMovie)
+        expect(movie).not.toEqual(moviesData[0])
     })
 })
 
