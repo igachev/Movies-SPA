@@ -10,6 +10,7 @@ describe('movieService.js',function() {
     let moviesData;
     let getAllSpy;
     let getPagesSpy;
+    let getOneSpy;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -105,6 +106,7 @@ describe('movieService.js',function() {
 
         getAllSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getPagesSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
+        getOneSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]))
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -120,6 +122,11 @@ describe('movieService.js',function() {
     let totalMovies = result.length
     const totalPages = Math.ceil(totalMovies / moviesPerPage);
     return totalPages
+            },
+
+            getOne: async function(movieId) {
+    const result = await getOneSpy(`${baseUrl}/movies/${movieId}`)
+    return result
             }
         }
     })
@@ -147,6 +154,15 @@ describe('movieService.js',function() {
         expect(getPagesSpy).toHaveBeenCalledWith(`${baseUrl}/movies`);
         expect(getPagesSpy).toHaveBeenCalledTimes(1)
         expect(totalPages).toBe(2)
+    })
+
+    it('should call getOne method and return correct movie',async function() {
+        const movieId = moviesData[0]._id;
+        let movie = await movieServices.getOne(movieId)
+        expect(getOneSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`)
+        expect(getOneSpy).toHaveBeenCalledTimes(1)
+        expect(movie).toEqual(moviesData[0])
+        expect(movie).not.toEqual(moviesData[1])
     })
 })
 
