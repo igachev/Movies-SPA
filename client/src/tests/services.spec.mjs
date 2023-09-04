@@ -14,6 +14,8 @@ describe('movieService.js',function() {
     let deleteOneSpy;
     let editOneSpy;
     let editedMovie;
+    let createSpy;
+    let createdMovie;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -123,11 +125,27 @@ describe('movieService.js',function() {
             ]
         };
 
+        createdMovie = {
+            _id: '644113e9cab7747841f70xxx',
+            title: 'Boys',
+            year: 2013,
+            runtime: 120,
+            genre: 'action',
+            description: 'amazing tv series',
+            imageUrl: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1294&q=80",
+            owner: '644ededb72e425c49c6b14af',
+            __v: 0,
+            likes: [
+               
+            ]
+        }
+
         getAllSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getPagesSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getOneSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]))
         deleteOneSpy = spyOn(requester,'del').and.returnValue(Promise.resolve(moviesData[0]))
         editOneSpy = spyOn(requester,'put').and.returnValue(Promise.resolve(editedMovie))
+        createSpy = spyOn(requester,'post').and.returnValue(Promise.resolve(createdMovie))
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -158,6 +176,11 @@ describe('movieService.js',function() {
             edit: async function(movieId,data) {
     const result = await editOneSpy(`${baseUrl}/movies/${movieId}`,data)
     return result
+            },
+
+            create: async function(movieData) {
+    const result = await createSpy(`${baseUrl}/movies/create`,movieData)
+    return result;
             }
         }
     })
@@ -210,6 +233,13 @@ describe('movieService.js',function() {
         expect(editOneSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`,editedMovie)
         expect(movie).toEqual(editedMovie)
         expect(movie).not.toEqual(moviesData[0])
+    })
+
+    it('should call create method and add new movie to the collection',async function() {
+        let newMovie = await movieServices.create(createdMovie)
+        expect(createSpy).toHaveBeenCalledTimes(1)
+        expect(createSpy).toHaveBeenCalledWith(`${baseUrl}/movies/create`,createdMovie)
+        expect(newMovie).toEqual(createdMovie)
     })
 })
 
