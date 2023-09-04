@@ -11,6 +11,7 @@ describe('movieService.js',function() {
     let getAllSpy;
     let getPagesSpy;
     let getOneSpy;
+    let deleteOneSpy;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -107,6 +108,7 @@ describe('movieService.js',function() {
         getAllSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getPagesSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData))
         getOneSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]))
+        deleteOneSpy = spyOn(requester,'del').and.returnValue(Promise.resolve(moviesData[0]))
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -126,6 +128,11 @@ describe('movieService.js',function() {
 
             getOne: async function(movieId) {
     const result = await getOneSpy(`${baseUrl}/movies/${movieId}`)
+    return result
+            },
+
+            deleteOne: async function(movieId) {
+    const result = await deleteOneSpy(`${baseUrl}/movies/${movieId}`)
     return result
             }
         }
@@ -163,6 +170,13 @@ describe('movieService.js',function() {
         expect(getOneSpy).toHaveBeenCalledTimes(1)
         expect(movie).toEqual(moviesData[0])
         expect(movie).not.toEqual(moviesData[1])
+    })
+
+    it('should call deleteOne method and delete a movie from the collection',async function() {
+        const movieId = moviesData[0]._id;
+        let movie = await movieServices.deleteOne(movieId)
+        expect(deleteOneSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`)
+        expect(deleteOneSpy).toHaveBeenCalledTimes(1)
     })
 })
 
