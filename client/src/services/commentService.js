@@ -1,6 +1,7 @@
 import {get,post,del,put,delComment} from './requester.js'
 
-const baseUrl = 'https://test-movies-api.onrender.com'
+//const baseUrl = 'https://test-movies-api.onrender.com'
+const baseUrl = 'http://localhost:5000'
 
 export async function add(movieId,data) {
     const result = await post(`${baseUrl}/comments/${movieId}`,data)
