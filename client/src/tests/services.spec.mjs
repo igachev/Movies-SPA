@@ -16,6 +16,9 @@ describe('movieService.js',function() {
     let editedMovie;
     let createSpy;
     let createdMovie;
+    let getLikeSpy;
+    let updateLikeSpy;
+    let alertLikeSpy;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -146,6 +149,9 @@ describe('movieService.js',function() {
         deleteOneSpy = spyOn(requester,'del').and.returnValue(Promise.resolve(moviesData[0]))
         editOneSpy = spyOn(requester,'put').and.returnValue(Promise.resolve(editedMovie))
         createSpy = spyOn(requester,'post').and.returnValue(Promise.resolve(createdMovie))
+        getLikeSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]));
+        updateLikeSpy = spyOn(requester,'put').and.returnValue(Promise.resolve(moviesData[0]))
+        alertLikeSpy = spyOn(window,'alert')
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -181,7 +187,20 @@ describe('movieService.js',function() {
             create: async function(movieData) {
     const result = await createSpy(`${baseUrl}/movies/create`,movieData)
     return result;
-            }
+            },
+
+            addLike: async function(movieId,userId) {
+    let movie = await getLikeSpy(movieId)
+
+    if(movie.likes.includes(userId)) {
+        alertLikeSpy('User already liked this movie')
+        return
+    }
+    
+    movie.likes.push(userId)
+    const result = await updateLikeSpy(`${baseUrl}/movies/${movieId}`,movie)
+    return result
+    }
         }
     })
 
@@ -240,6 +259,30 @@ describe('movieService.js',function() {
         expect(createSpy).toHaveBeenCalledTimes(1)
         expect(createSpy).toHaveBeenCalledWith(`${baseUrl}/movies/create`,createdMovie)
         expect(newMovie).toEqual(createdMovie)
+    })
+
+    it('should call addLike method and add a like for selected movie if the movie is not already liked by the user',async function() {
+        let movieId = '644ee3e9cab7747841f70eee';
+        let userId = '544ee3e9cae7747842f70ee1'
+        let movieLikesBeforeLike = moviesData[0].likes.length;
+        let likedMovie = await movieServices.addLike(movieId,userId)
+        expect(getLikeSpy).toHaveBeenCalledTimes(1)
+        expect(getLikeSpy).toHaveBeenCalledWith(movieId)
+        expect(updateLikeSpy).toHaveBeenCalledTimes(1)
+        expect(updateLikeSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`,moviesData[0])
+        expect(likedMovie.likes.length).toBe(3)
+        expect(likedMovie.likes).toContain(userId)
+        expect(likedMovie.likes.length).not.toBe(movieLikesBeforeLike)
+    })
+
+    it('should call addLike method and display alert message because user already liked this movie', async function() {
+        let movieId = '644ee3e9cab7747841f70eee';
+        let userId = '6453e59987886e2de0a509f5'
+        let likedMovie = await movieServices.addLike(movieId,userId)
+        expect(alertLikeSpy).toHaveBeenCalledWith('User already liked this movie')
+        expect(alertLikeSpy).toHaveBeenCalledTimes(1)
+        expect(updateLikeSpy).toHaveBeenCalledTimes(0)
+        
     })
 })
 
