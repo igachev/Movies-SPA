@@ -19,6 +19,8 @@ describe('movieService.js',function() {
     let getLikeSpy;
     let updateLikeSpy;
     let alertLikeSpy;
+    let getRemoveLikeSpy;
+    let updateRemoveLikeSpy;
 
     beforeEach(function() {
         moviesPerPage = 5;
@@ -152,6 +154,8 @@ describe('movieService.js',function() {
         getLikeSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]));
         updateLikeSpy = spyOn(requester,'put').and.returnValue(Promise.resolve(moviesData[0]))
         alertLikeSpy = spyOn(window,'alert')
+        getRemoveLikeSpy = spyOn(requester,'get').and.returnValue(Promise.resolve(moviesData[0]));
+        updateRemoveLikeSpy = spyOn(requester,'put').and.returnValue(Promise.resolve(moviesData[0]))
 
         movieServices = {
             getAll: async function(currentPage) {
@@ -200,7 +204,19 @@ describe('movieService.js',function() {
     movie.likes.push(userId)
     const result = await updateLikeSpy(`${baseUrl}/movies/${movieId}`,movie)
     return result
-    }
+    },
+
+            removeLike: async function(movieId,userId) {
+    let movie = await getRemoveLikeSpy(movieId)
+    const position = movie.likes.indexOf(userId)
+            
+    if(position !== -1) {
+    movie.likes.splice(position,1)
+    } 
+            
+    const result = await updateRemoveLikeSpy(`${baseUrl}/movies/${movieId}`,movie)
+    return result
+        }
         }
     })
 
@@ -283,6 +299,20 @@ describe('movieService.js',function() {
         expect(alertLikeSpy).toHaveBeenCalledTimes(1)
         expect(updateLikeSpy).toHaveBeenCalledTimes(0)
         
+    })
+
+    it('should call removeLike method and remove like if the user already liked this movie',async function() {
+        let movieId = '644ee3e9cab7747841f70eee';
+        let userId = '6453e59987886e2de0a509f5';
+        let movieLikesBeforeRemoveLike = moviesData[0].likes.length;
+        let removeLikeFromMovie = await movieServices.removeLike(movieId,userId)
+        expect(getRemoveLikeSpy).toHaveBeenCalledTimes(1)
+        expect(getRemoveLikeSpy).toHaveBeenCalledWith(movieId)
+        expect(updateRemoveLikeSpy).toHaveBeenCalledTimes(1)
+        expect(updateRemoveLikeSpy).toHaveBeenCalledWith(`${baseUrl}/movies/${movieId}`,moviesData[0])
+        expect(removeLikeFromMovie.likes.length).not.toBe(movieLikesBeforeRemoveLike)
+        expect(removeLikeFromMovie.likes.length).toBe(1)
+        expect(removeLikeFromMovie.likes).not.toContain(userId)
     })
 })
 
