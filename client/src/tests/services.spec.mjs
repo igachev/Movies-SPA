@@ -322,28 +322,48 @@ let usersData;
 let userServices;
 let baseUrl;
 let registerSpy;
+let loginSpy;
+let sessionSpy;
+
 
 beforeEach(function() {
 baseUrl = baseUrl = 'http://localhost:5000';
 
     usersData = [
-        {
+        {   
+            _id:'1',
             email: 'ivo@abv.bg',
             password: 1234
         },
         {
+            _id:'2',
             email: 'ivan@abv.bg',
             password: 1234
         }
     ];
 
     registerSpy = spyOn(requester,'post').and.returnValue({email:'petar@abv.bg',password:1234})
+    loginSpy = spyOn(requester,'post').and.returnValue(usersData[0])
+    sessionSpy = spyOn(sessionStorage,'setItem')
 
     userServices = {
         register: async function(email,password) {
             const result = await registerSpy(`${baseUrl}/users/register`, {email,password})
             return result
+        },
+
+        login: async function(email,password) {
+            const result = await loginSpy(`${baseUrl}/users/login`, {email,password})
+    
+            if(!result.hasOwnProperty('message')) {
+            sessionSpy('email', result.email)
+            sessionSpy('authToken', 'token');
+            sessionSpy('userId', result._id);
         }
+            return result
+        },
+
+
     }
 
     
@@ -357,6 +377,20 @@ expect(registerSpy).toHaveBeenCalledTimes(1)
 expect(registerSpy).toHaveBeenCalledWith(`${baseUrl}/users/register`,{email,password})
 expect(newUser.email).toBe(email)
 expect(newUser.password).toBe(password)
+})
+
+it('should call login method and login user successfully', async function() {
+    let email = 'ivo@abv.bg'
+    let password = 1234
+    let loggedUser = await userServices.login(email,password)
+    expect(loginSpy).toHaveBeenCalledTimes(1)
+    expect(loginSpy).toHaveBeenCalledWith(`${baseUrl}/users/login`, {email,password})
+    expect(loggedUser.email).toBe(email)
+    expect(loggedUser.password).toBe(password)
+   expect(sessionSpy).toHaveBeenCalledTimes(3)
+   expect(sessionSpy).toHaveBeenCalledWith('email','ivo@abv.bg')
+   expect(sessionSpy).toHaveBeenCalledWith('userId','1')
+   expect(sessionSpy).toHaveBeenCalledWith('authToken','token')
 })
 })
 
