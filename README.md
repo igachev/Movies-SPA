@@ -1,8 +1,10 @@
 # Movies-SPA
 
+### Initial loading of website might take up to 1 minute because it is free tier
+
 ## Link to movies-spa website: https://test-movies-spa.onrender.com
 
-## Link to movies-spa-API: https://test-movies-api.onrender.com
+## Link to movies-spa-API: https://test-movies-api.onrender.com/movies
 
 ### Backend documentation for movies API:
 
@@ -25,9 +27,9 @@
 
 1. Clone this repository: `git clone https://github.com/igachev/Movies-SPA.git`
 
-2. Install dependencies: `npm install`
+2. Go to folder server: `cd server`
  
-3. Go to folder server: `cd server`
+3. Install dependencies: `npm install`
 
 4. Start the server: `npm start`
 
@@ -80,10 +82,21 @@ This application is built with JavaScript,HTML,CSS.Using this application you ca
 - lite-server
 
 ### Installation:
-1. Clone this repository: `git clone https://github.com/igachev/Movies-SPA.git`
-2. Install dependencies: `npm install`
-3. Go to folder client: `cd client`
+1. Make sure you completed the above mentioned installation
+2. Go to folder client: `cd client`
+3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
+
+
+### Unit Tests:
+1. Go to folder client: `cd client`
+2. Run command: `npx jasmine-browser-runner serve`
+
+<p align="center">
+ 
+ ![movies-tests](https://github.com/igachev/Movies-SPA/assets/102420254/d7f1097d-48f7-41be-9e94-dd2bf87f655f)
+
+</p>
 
 ### Folder structure:
 - `views` : Contains HTML templates for different views of the application.
@@ -103,3 +116,69 @@ The application uses Page.js for client-side routing. Here are the available rou
 - `/movies/:movieId/delete` : Movie deletion view
 - `/movies/:movieId/edit` : Movie editing view
 - `/comments/:movieId/add` : Comment addition view
+
+
+### Images:
+
+<p align="center">
+Home Page
+ 
+ ![movies-home](https://github.com/igachev/Movies-SPA/assets/102420254/8a5abcbc-be92-4fb0-95c6-ab628790e57f)
+
+</p>
+
+<p align="center">
+ Register Page
+
+![movies-register](https://github.com/igachev/Movies-SPA/assets/102420254/68f11b85-ece7-464e-b2de-4a7df4adc851)
+
+</p>
+
+<p align="center">
+ Login Page
+
+ ![movies-login](https://github.com/igachev/Movies-SPA/assets/102420254/69e8580f-28d4-408c-ba2b-572f18bbcfd7)
+
+</p>
+
+<p align="center">
+ All Movies Page.Pagination is used.
+
+ ![movies-movies](https://github.com/igachev/Movies-SPA/assets/102420254/aabdeea3-828c-46bb-a876-5d93dcfb3eff)
+
+</p>
+
+<p align="center">
+ Guest User Movie Details
+
+ ![movies-guestDetails](https://github.com/igachev/Movies-SPA/assets/102420254/a8f67128-7f8d-49f1-a7b6-99c3bbec258e)
+
+</p>
+
+<p align="center">
+ Logged In User Movie Details
+
+ ![movies-loggedUser](https://github.com/igachev/Movies-SPA/assets/102420254/4fd267be-5427-4bc3-8117-1962d53a8b6c)
+
+</p>
+
+<p align="center">
+ Owner User Movie Details
+
+ ![movies-ownerDetails](https://github.com/igachev/Movies-SPA/assets/102420254/1912a634-660b-4cc9-9e78-5c513a60b9f6)
+
+</p>
+
+<p align="center">
+ Create Movie Page
+
+ ![movies-create](https://github.com/igachev/Movies-SPA/assets/102420254/b023e969-6fc6-4ec8-a292-7d665e987762)
+
+</p>
+
+<p align="center">
+ Post comment for specific movie
+
+ ![movies-postComment](https://github.com/igachev/Movies-SPA/assets/102420254/ca49358e-3dfa-4e8b-8ca9-7d1a67ee6670)
+
+</p>
