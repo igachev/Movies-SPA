@@ -324,7 +324,8 @@ let baseUrl;
 let registerSpy;
 let loginSpy;
 let sessionSpy;
-
+let logoutSpy;
+let sessionRemoveSpy;
 
 beforeEach(function() {
 baseUrl = baseUrl = 'http://localhost:5000';
@@ -345,6 +346,8 @@ baseUrl = baseUrl = 'http://localhost:5000';
     registerSpy = spyOn(requester,'post').and.returnValue({email:'petar@abv.bg',password:1234})
     loginSpy = spyOn(requester,'post').and.returnValue(usersData[0])
     sessionSpy = spyOn(sessionStorage,'setItem')
+    logoutSpy = spyOn(requester,'get')
+    sessionRemoveSpy = spyOn(sessionStorage,'removeItem')
 
     userServices = {
         register: async function(email,password) {
@@ -363,7 +366,13 @@ baseUrl = baseUrl = 'http://localhost:5000';
             return result
         },
 
-
+        logout: async function() {
+            const result = await logoutSpy(`${baseUrl}/users/logout`)
+            sessionRemoveSpy('email')
+            sessionRemoveSpy('authToken')
+            sessionRemoveSpy('userId')
+            return result;
+        }
     }
 
     
@@ -391,6 +400,16 @@ it('should call login method and login user successfully', async function() {
    expect(sessionSpy).toHaveBeenCalledWith('email','ivo@abv.bg')
    expect(sessionSpy).toHaveBeenCalledWith('userId','1')
    expect(sessionSpy).toHaveBeenCalledWith('authToken','token')
+})
+
+it('should call logout method and logout user successfully', async function() {
+    let logoutUser = await userServices.logout()
+    expect(logoutSpy).toHaveBeenCalledTimes(1)
+    expect(logoutSpy).toHaveBeenCalledWith(`${baseUrl}/users/logout`)
+    expect(sessionRemoveSpy).toHaveBeenCalledTimes(3)
+    expect(sessionRemoveSpy).toHaveBeenCalledWith('email')
+    expect(sessionRemoveSpy).toHaveBeenCalledWith('authToken')
+    expect(sessionRemoveSpy).toHaveBeenCalledWith('userId')
 })
 })
 
