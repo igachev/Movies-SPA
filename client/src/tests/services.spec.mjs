@@ -413,4 +413,66 @@ it('should call logout method and logout user successfully', async function() {
 })
 })
 
+describe('readHandler.js',function() {
+    let readService;
+    const speechSynthesisUtterance = jasmine.createSpy("SpeechSynthesisUtterance", ["rate"]);
+    const speechSynthesis = jasmine.createSpyObj("speechSynthesis", ["speak","speaking"]);
+    
+
+    beforeEach(function() {
+
+        readService = {
+            readHandler: function(title,year,runtime,genre,description,likes) {
+                return async function(e) {
+                    e.preventDefault()
+                    const titleText = `Title: ${title} `
+                    const yearText = `Year: ${year} `
+                    const runtimeText = `Runtime: ${runtime} minutes `
+                    const genreText = `Genre: ${genre} `
+                    const descriptionText = `Description: ${description} `
+                    const likesText = `Likes: ${likes} `   
+
+                    if(speechSynthesis.speaking) {
+                        return
+                    }
+            
+                    const titleUtterence = new speechSynthesisUtterance(titleText);
+                    titleUtterence.rate = 0.7;
+                    speechSynthesis.speak(titleUtterence);
+            
+                    const yearUtterence = new speechSynthesisUtterance(yearText);
+                    yearUtterence.rate = 0.7;
+                    speechSynthesis.speak(yearUtterence);
+            
+                    const runtimeUtterence = new speechSynthesisUtterance(runtimeText);
+                    runtimeUtterence.rate = 0.7;
+                    speechSynthesis.speak(runtimeUtterence);
+            
+                    const genreUtterence = new speechSynthesisUtterance(genreText);
+                    genreUtterence.rate = 0.7;
+                    speechSynthesis.speak(genreUtterence);
+            
+                    const descriptionUtterence = new speechSynthesisUtterance(descriptionText);
+                    descriptionUtterence.rate = 0.7;
+                    speechSynthesis.speak(descriptionUtterence);
+            
+                    const likesUtterence = new speechSynthesisUtterance(likesText);
+                    likesUtterence.rate = 0.7;
+                    speechSynthesis.speak(likesUtterence);
+                }
+            }
+        }
+    })
+    it('should call readHandler method and read movie details correctly',function() {
+      speechSynthesis.speaking = false;
+      let handler = readService.readHandler('Avatar',2000,162,'sci-fi','movie description',2)
+      let mockClick = new Event('click')
+      handler(mockClick)
+      expect(speechSynthesis.speak).toHaveBeenCalledTimes(6)
+      expect(speechSynthesisUtterance).toHaveBeenCalledTimes(6)
+    })
+
+    
+})
+
 })
