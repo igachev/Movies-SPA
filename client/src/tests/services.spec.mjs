@@ -316,4 +316,48 @@ describe('movieService.js',function() {
     })
 })
 
+describe('userService.js',function() {
+
+let usersData;
+let userServices;
+let baseUrl;
+let registerSpy;
+
+beforeEach(function() {
+baseUrl = baseUrl = 'http://localhost:5000';
+
+    usersData = [
+        {
+            email: 'ivo@abv.bg',
+            password: 1234
+        },
+        {
+            email: 'ivan@abv.bg',
+            password: 1234
+        }
+    ];
+
+    registerSpy = spyOn(requester,'post').and.returnValue({email:'petar@abv.bg',password:1234})
+
+    userServices = {
+        register: async function(email,password) {
+            const result = await registerSpy(`${baseUrl}/users/register`, {email,password})
+            return result
+        }
+    }
+
+    
+})
+
+it('should call register method and register new user',async function() {
+let email = 'petar@abv.bg'
+let password = 1234
+let newUser = await userServices.register(email,password)
+expect(registerSpy).toHaveBeenCalledTimes(1)
+expect(registerSpy).toHaveBeenCalledWith(`${baseUrl}/users/register`,{email,password})
+expect(newUser.email).toBe(email)
+expect(newUser.password).toBe(password)
+})
+})
+
 })
